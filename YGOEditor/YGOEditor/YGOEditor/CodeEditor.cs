@@ -13,7 +13,14 @@ using YGOEditor.Util;
 
 namespace YGOEditor
 {
-    public partial class CodeEditor : DockContent,IYEForm{
+    public partial class CodeEditor : DockContent,IYEForm {
+
+        #region static
+        public static bool ShowDocMapOnCreate {
+            get;
+            set;
+        }
+        #endregion
 
         #region Delegates
         public event EventHandler LoadedFile;
@@ -77,6 +84,8 @@ namespace YGOEditor
         public CodeEditor()
         {
             InitializeComponent();
+            if (ShowDocMapOnCreate)
+                ShowDocMap = true;
         }
 
         public void Open(string fileName, Encoding code = null)

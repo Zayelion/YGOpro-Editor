@@ -20,18 +20,16 @@ namespace YGOEditor
         {
             InitializeComponent();
             
-            m_deserializeDockConetent = new DeserializeDockContent(YEFormFactory.CreateForm);
-            m_codeEditors =  new List<CodeEditor>();
+            _deserializeDockConetent = new DeserializeDockContent(YEFormFactory.CreateForm);
         }
         #region  Const var
-        private string m_ConfigFile = Properties.Settings.Default.ConfigFile;
+        private string _configFile = Properties.Settings.Default.ConfigFile;
 
-        private bool m_showDocMap = false;
+        private bool _showDocMap = false;
         #endregion
 
         #region Members
-        private DeserializeDockContent m_deserializeDockConetent;
-        private List<CodeEditor> m_codeEditors;
+        private DeserializeDockContent _deserializeDockConetent;
 
         
         #endregion
@@ -44,7 +42,7 @@ namespace YGOEditor
         {
             try
             {
-                dockPanel.SaveAsXml(m_ConfigFile);
+                dockPanel.SaveAsXml(_configFile);
             }
             catch (System.Exception ex)
             {
@@ -56,8 +54,8 @@ namespace YGOEditor
         {
             try
             {
-                if (File.Exists(m_ConfigFile))
-                    dockPanel.LoadFromXml(m_ConfigFile, GetContentFromPersistString);
+                if (File.Exists(_configFile))
+                    dockPanel.LoadFromXml(_configFile,_deserializeDockConetent);
             }
             catch (System.Exception ex)
             {
@@ -81,15 +79,14 @@ namespace YGOEditor
         /// </summary>
         public void LoadAppSetting()
         {
-            m_showDocMap = Properties.Settings.Default.ShowDocMap;
-
+           DocMapToolStripMenuItem.Checked = CodeEditor.ShowDocMapOnCreate = Properties.Settings.Default.ShowDocMap;
         }
 
         public void OpenFile(string fileName)
         {
             CodeEditor ce = new CodeEditor();
-            m_codeEditors.Add(ce);
-            ce.ShowDocMap = m_showDocMap;
+            _codeEditors.Add(ce);
+            ce.ShowDocMap = _showDocMap;
             ce.Open(openFileDialog1.FileName);
             ce.Show(dockPanel);
         }
@@ -97,14 +94,12 @@ namespace YGOEditor
         public void CreateFile()
         {
             CodeEditor ce = new CodeEditor();
-            m_codeEditors.Add(ce);
-            ce.ShowDocMap = m_showDocMap;
-            ce.Text = "New" + m_codeEditors.Count + ".lua";
+            _codeEditors.Add(ce);
+            ce.ShowDocMap = _showDocMap;
+            ce.Text = "New" + _codeEditors.Count + ".lua";
             ce.Show(dockPanel);
         }
 
-        
-       
         #endregion
 
 
@@ -112,12 +107,14 @@ namespace YGOEditor
         #region Functions
         private void 文档结构图ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            m_showDocMap = DocMapToolStripMenuItem.Checked;
+            _showDocMap = DocMapToolStripMenuItem.Checked;
             
             //Update CodeEditors
-            foreach (CodeEditor ce in m_codeEditors)
-            {
-                ce.ShowDocMap = m_showDocMap;
+            foreach (DockContent dc in dockPanel.Contents) {
+                if (dc is CodeEditor) {
+                    CodeEditor ce = dc as CodeEditor;
+                    ce.ShowDocMap = _showDocMap;
+                }
             }
         }
 
