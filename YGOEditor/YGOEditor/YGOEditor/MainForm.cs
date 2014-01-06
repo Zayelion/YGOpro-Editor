@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Configuration;
+using YGOEditor.Util;
 
 namespace YGOEditor
 {
@@ -19,7 +20,7 @@ namespace YGOEditor
         {
             InitializeComponent();
             
-            m_deserializeDockConetent = new DeserializeDockContent(GetContentFromPersistString);
+            m_deserializeDockConetent = new DeserializeDockContent(YEFormFactory.CreateForm);
             m_codeEditors =  new List<CodeEditor>();
         }
         #region  Const var
@@ -82,29 +83,6 @@ namespace YGOEditor
         {
             m_showDocMap = Properties.Settings.Default.ShowDocMap;
 
-        }
-        /// <summary>
-        /// DockPanel.LoadFromXml是调用此委托解析persistString重建DockContent
-        /// </summary>
-        /// <param name="persistString">持久化数据，记录了DockContent的属性值</param>
-        /// <returns>子窗体对象</returns>
-        private IDockContent GetContentFromPersistString(string persistString)
-        {
-            string[] prasedString = persistString.Split(',');
-
-            if (prasedString[0] == typeof(CodeEditor).ToString())
-            {
-                if (!string.IsNullOrEmpty(prasedString[1]))
-                {
-                    CodeEditor ce = new CodeEditor();
-                    m_codeEditors.Add(ce);
-                    ce.Open(prasedString[1]);
-                    return ce;
-                }
-                return null;
-            }
-
-            return null;
         }
 
         public void OpenFile(string fileName)
