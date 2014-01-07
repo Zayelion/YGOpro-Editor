@@ -152,15 +152,15 @@ namespace YGOEditor
 
         #region IYEForm 成员
 
-        public void SetParams(string[] param) {
+        public bool SetParams(string[] param) {
             if (string.IsNullOrEmpty(param[0])) {
-                return;
+                return false;
             }
             else {
                 Open(param[0]);
+                return true;
             }
         }
-
         #endregion
 }
 

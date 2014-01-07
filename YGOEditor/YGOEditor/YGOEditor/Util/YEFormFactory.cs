@@ -12,11 +12,18 @@ namespace YGOEditor.Util {
                 Type type = Type.GetType(persist.TypeName);
                 Assembly assembly = Assembly.GetAssembly(type);
                 object o = assembly.CreateInstance(persist.TypeName);
+                bool ret = true;
                 if (o is IYEForm) {
                     IYEForm yef = o as IYEForm;
-                    yef.SetParams(persist.Params);
+                    ret = yef.SetParams(persist.Params);
                 }
-                return o as DockContent;
+
+                if (ret) {
+                    return o as DockContent;
+                }
+                else {
+                    return null;
+                }
             }
             catch (System.Exception ex) {
                 throw ex;

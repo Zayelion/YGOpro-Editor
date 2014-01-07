@@ -5,6 +5,11 @@ using System.Text;
 
 namespace YGOEditor.Util {
     public interface IYEForm {
-         void SetParams(string[] param);
+        /// <summary>
+        /// set DockContent param from persist string
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>false dockconent can't create</returns>
+         bool SetParams(string[] param);
     }
 }
