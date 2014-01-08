@@ -17,8 +17,11 @@ namespace YGOEditor {
         public MainForm() {
             InitializeComponent();
 
-            _deserializeDockConetent = new DeserializeDockContent(YEFormFactory.CreateForm);
+            _deserializeDockConetent = new DeserializeDockContent(GetContentFromPersistString);
+            _effectView = new EffectView();
         }
+
+       
         #region  Const var
         private string _configFile = Properties.Settings.Default.ConfigFile;
 
@@ -27,13 +30,29 @@ namespace YGOEditor {
 
         #region Members
         private DeserializeDockContent _deserializeDockConetent;
-
-
+        private EffectView _effectView;
+        
         #endregion
 
 
 
         #region Customs
+
+        private IDockContent GetContentFromPersistString(string persistString) {
+
+            Persist ps = new Persist(persistString);
+
+            if (ps.TypeName == typeof(CodeEditor).ToString()) {
+                if ( ps.Params == null || string.IsNullOrEmpty(ps.Params[0]))
+                    return null;
+
+                CodeEditor ce = CodeEditorManager.Create(ps.Params[0]);
+                ce.Text = ps.Params[1];
+                return ce;
+            }
+
+            return null;
+        }
 
         public void DockSaveAsXml() {
             try {
@@ -68,28 +87,7 @@ namespace YGOEditor {
         /// 加载用户首选项设置
         /// </summary>
         public void LoadAppSetting() {
-            DocMapToolStripMenuItem.Checked = CodeEditor.ShowDocMapOnCreate = Properties.Settings.Default.ShowDocMap;
-        }
-
-        public void OpenFile(string fileName) {
-            CodeEditor ce = new CodeEditor();
-            ce.ShowDocMap = _showDocMap;
-            ce.Open(openFileDialog1.FileName);
-            ce.Show(dockPanel);
-        }
-
-        public void CreateFile() {
-            int count = 0;
-            foreach (DockContent dc in dockPanel.Contents) {
-                if (dc is CodeEditor){
-                    count++;
-                }
-            }
-
-            CodeEditor ce = new CodeEditor();
-            ce.ShowDocMap = _showDocMap;
-            ce.Text = "New"+count+".lua";
-            ce.Show(dockPanel);
+            CodeEditorManager.ShowAllDocMap = DocMapToolStripMenuItem.Checked =  Properties.Settings.Default.ShowDocMap;
         }
 
         #endregion
@@ -98,15 +96,7 @@ namespace YGOEditor {
 
         #region Functions
         private void 文档结构图ToolStripMenuItem_Click(object sender, EventArgs e) {
-            _showDocMap = DocMapToolStripMenuItem.Checked;
-
-            //Update CodeEditors
-            foreach (DockContent dc in dockPanel.Contents) {
-                if (dc is CodeEditor) {
-                    CodeEditor ce = dc as CodeEditor;
-                    ce.ShowDocMap = _showDocMap;
-                }
-            }
+            CodeEditorManager.ShowAllDocMap = _showDocMap = DocMapToolStripMenuItem.Checked;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
@@ -120,17 +110,36 @@ namespace YGOEditor {
         }
 
         private void OpenDocToolStripMenuItem_Click(object sender, EventArgs e) {
+//             DialogResult result = openFileDialog1.ShowDialog();
+//             if (result == DialogResult.OK) {
+//                 OpenFile(openFileDialog1.FileName);
+//             }
+
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK) {
-                OpenFile(openFileDialog1.FileName);
+                try {
+                    DockContent dc = CodeEditorManager.Create(openFileDialog1.FileName);
+                    dc.MdiParent = this;
+                    dc.Show(dockPanel);
+                }
+                catch (System.Exception ex) {
+                    MessageBox.Show("打开错误！" + ex.Message);
+                }
             }
         }
         private void toolStripMenuItem1_Click(object sender, EventArgs e) {
-            CreateFile();
+//             CreateFile();
+            DockContent dc = CodeEditorManager.Create();
+            dc.MdiParent = this;
+            dc.Show(dockPanel);
         }
 
 
         #endregion
+
+        private void 效果管理器ToolStripMenuItem_Click(object sender, EventArgs e) {
+            _effectView.Show(dockPanel);
+        }
     }
 
 }

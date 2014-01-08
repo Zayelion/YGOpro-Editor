@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YGOEditor", "YGOEditor\YGOE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{014C86CF-B6A7-4EA1-8127-7BE5CCDFF3F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testor", "Testor\Testor.csproj", "{1AFE62E8-FE49-461A-B443-1F7D95802925}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{014C86CF-B6A7-4EA1-8127-7BE5CCDFF3F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{014C86CF-B6A7-4EA1-8127-7BE5CCDFF3F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{014C86CF-B6A7-4EA1-8127-7BE5CCDFF3F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AFE62E8-FE49-461A-B443-1F7D95802925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AFE62E8-FE49-461A-B443-1F7D95802925}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AFE62E8-FE49-461A-B443-1F7D95802925}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AFE62E8-FE49-461A-B443-1F7D95802925}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

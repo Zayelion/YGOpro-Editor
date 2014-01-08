@@ -23,14 +23,9 @@ namespace YGOEditor.Util {
         /// </summary>
         public string[] Params {
             get {
-
-                //this means persist has no params
-                if (!_persistString.Contains(',')) {
-                    return null;
-                }
-                //this means persist has params but someone maybe null
                 //analys params
                 string[] prasedStr = _persistString.Split(',');
+
                 string[] retStr = new string[prasedStr.Length-1];
 
                 for (int i = 1; i < prasedStr.Length; i++){

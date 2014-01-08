@@ -13,18 +13,10 @@ using YGOEditor.Util;
 
 namespace YGOEditor
 {
-    public partial class CodeEditor : DockContent,IYEForm {
-
-        #region static
-        public static bool ShowDocMapOnCreate {
-            get;
-            set;
-        }
-        #endregion
+    public partial class CodeEditor : DockContent{
 
         #region Delegates
         public event EventHandler LoadedFile;
-
         #endregion
 
         #region Members
@@ -84,8 +76,6 @@ namespace YGOEditor
         public CodeEditor()
         {
             InitializeComponent();
-            if (ShowDocMapOnCreate)
-                ShowDocMap = true;
         }
 
         public void Open(string fileName, Encoding code = null)
@@ -106,9 +96,8 @@ namespace YGOEditor
                 }
             }
             catch (System.Exception ex) {
-                MessageBox.Show("打开错误!" + ex.ToString(), "错误");
+                throw ex;
             }
-            
         }
 
         /// <summary>
@@ -145,23 +134,10 @@ namespace YGOEditor
 
         protected override string GetPersistString()
         {
-                return GetType().ToString() + "," + _fileName;
+                return GetType().ToString() + "," + _fileName+","+this.Text;
         }
         #endregion
 
-
-        #region IYEForm 成员
-
-        public bool SetParams(string[] param) {
-            if (string.IsNullOrEmpty(param[0])) {
-                return false;
-            }
-            else {
-                Open(param[0]);
-                return true;
-            }
-        }
-        #endregion
 }
 
 
