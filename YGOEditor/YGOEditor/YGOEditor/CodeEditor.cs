@@ -109,6 +109,8 @@ namespace YGOEditor
         {
             if (code == null) code = Encoding.UTF8;
             fastColoredTextBox1.SaveToFile(fileName, code);
+            _fileName = fileName;
+            this.Text = Path.GetFileName(fileName);
         }
         /// <summary>
         /// save override

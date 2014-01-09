@@ -19,6 +19,9 @@ namespace YGOEditor {
 
             _deserializeDockConetent = new DeserializeDockContent(GetContentFromPersistString);
             _effectView = new EffectView();
+
+            
+            
         }
 
        
@@ -46,9 +49,14 @@ namespace YGOEditor {
                 if ( ps.Params == null || string.IsNullOrEmpty(ps.Params[0]))
                     return null;
 
-                CodeEditor ce = CodeEditorManager.Create(ps.Params[0]);
-                ce.Text = ps.Params[1];
-                return ce;
+                try {
+                    CodeEditor ce = CodeEditorManager.Create(ps.Params[0]);
+                    ce.Text = ps.Params[1];
+                    return ce;
+                }
+                catch (System.Exception ex) {
+                    return null;
+                }
             }
 
             return null;
@@ -90,6 +98,7 @@ namespace YGOEditor {
             CodeEditorManager.ShowAllDocMap = DocMapToolStripMenuItem.Checked =  Properties.Settings.Default.ShowDocMap;
         }
 
+
         #endregion
 
 
@@ -110,10 +119,6 @@ namespace YGOEditor {
         }
 
         private void OpenDocToolStripMenuItem_Click(object sender, EventArgs e) {
-//             DialogResult result = openFileDialog1.ShowDialog();
-//             if (result == DialogResult.OK) {
-//                 OpenFile(openFileDialog1.FileName);
-//             }
 
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK) {
@@ -135,11 +140,32 @@ namespace YGOEditor {
         }
 
 
-        #endregion
+        
 
         private void 效果管理器ToolStripMenuItem_Click(object sender, EventArgs e) {
             _effectView.Show(dockPanel);
         }
+
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e) {
+            CodeEditor ce = dockPanel.ActiveDocument as CodeEditor;
+            if (!string.IsNullOrEmpty(ce.FileName)) {
+                ce.Save();
+            }
+            else {
+                DialogResult result = saveFileDialog1.ShowDialog();
+                if (result == DialogResult.OK) {
+                    ce.Save(saveFileDialog1.FileName);
+                }
+            }
+        }
+
+        private void dockPanel_ActiveDocumentChanged(object sender, EventArgs e) {
+            string docName = ((DockContent)dockPanel.ActiveDocument).Text;
+            string formatStr = Properties.Resources.SaveFile;
+            SaveToolStripMenuItem.Text = string.Format(formatStr, docName);
+        } 
+        
+        #endregion
     }
 
 }

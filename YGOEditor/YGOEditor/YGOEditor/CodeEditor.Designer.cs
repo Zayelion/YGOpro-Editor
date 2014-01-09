@@ -64,12 +64,12 @@
             this.fastColoredTextBox1.BackBrush = null;
             this.fastColoredTextBox1.CharHeight = 18;
             this.fastColoredTextBox1.CharWidth = 10;
-            this.fastColoredTextBox1.CommentPrefix = "\'";
+            this.fastColoredTextBox1.CommentPrefix = "‘";
             this.fastColoredTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fastColoredTextBox1.DescriptionFile = "";
             this.fastColoredTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.fastColoredTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fastColoredTextBox1.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fastColoredTextBox1.Font = new System.Drawing.Font("Courier New", 12F);
             this.fastColoredTextBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.fastColoredTextBox1.IndentBackColor = System.Drawing.Color.Gainsboro;
             this.fastColoredTextBox1.IsReplaceMode = false;
@@ -83,7 +83,7 @@
             this.fastColoredTextBox1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.fastColoredTextBox1.Size = new System.Drawing.Size(410, 386);
             this.fastColoredTextBox1.TabIndex = 0;
-            this.fastColoredTextBox1.TabLength = 2;
+            this.fastColoredTextBox1.TabLength = 1;
             this.fastColoredTextBox1.WordWrapAutoIndent = false;
             this.fastColoredTextBox1.Zoom = 100;
             // 
